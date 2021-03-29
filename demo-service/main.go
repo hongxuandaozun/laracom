@@ -55,7 +55,7 @@ func main() {
 
 	// 注册服务名必须和 demo.proto 中的 package 声明一致
 	service := micro.NewService(
-		micro.Name("laracom.demo.service"),
+		micro.Name("laracom.service.demo"),
 		micro.WrapHandler(traceplugin.NewHandlerWrapper(opentracing.GlobalTracer())),
 	)
 	service.Init()
