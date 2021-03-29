@@ -2,14 +2,12 @@ package main
 
 import (
 	"context"
-	"github.com/hongxuan/laracom/demo-service"
-	pb "github.com/hongxuan/laracom/demo-service/proto/demo"
+	pb "github.com/hongxuandaozun/laracom/demo-service/proto/demo"
 	"github.com/micro/go-micro"
 	"log"
 )
 
 func main() {
-
 	service := micro.NewService(micro.Name("laracom.demo.cli"))
 	service.Init()
 
