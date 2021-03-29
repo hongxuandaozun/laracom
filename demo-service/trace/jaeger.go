@@ -8,9 +8,10 @@ import (
 	"time"
 )
 
-func NewTracer(serverName, addr string) (opentracing.Tracer, io.Closer, error) {
-	configuration := jaegercfg.Configuration{
-		ServiceName: serverName,
+// NewTracer 创建一个jaeger Tracer
+func NewTracer(servicename string, addr string) (opentracing.Tracer, io.Closer, error) {
+	cfg := jaegercfg.Configuration{
+		ServiceName: servicename,
 		Sampler: &jaegercfg.SamplerConfig{
 			Type:  jaeger.SamplerTypeConst,
 			Param: 1,
@@ -18,13 +19,20 @@ func NewTracer(serverName, addr string) (opentracing.Tracer, io.Closer, error) {
 		Reporter: &jaegercfg.ReporterConfig{
 			LogSpans:            true,
 			BufferFlushInterval: 1 * time.Second,
-			CollectorEndpoint:   "http://jaeger:14268/api/traces",
+			CollectorEndpoint:   "http://laracom-jaeger:14268/api/traces",
 		},
 	}
+
 	sender, err := jaeger.NewUDPTransport(addr, 0)
 	if err != nil {
 		return nil, nil, err
 	}
+
 	reporter := jaeger.NewRemoteReporter(sender)
-	return configuration.NewTracer(jaegercfg.Reporter(reporter))
+	// Initialize tracer with a logger and a metrics factory
+	tracer, closer, err := cfg.NewTracer(
+		jaegercfg.Reporter(reporter),
+	)
+
+	return tracer, closer, err
 }

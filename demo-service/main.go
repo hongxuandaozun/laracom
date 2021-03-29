@@ -2,10 +2,10 @@ package main
 
 import (
 	"context"
-	"fmt"
 	pb "github.com/hongxuandaozun/laracom/demo-service/proto/demo"
 	"github.com/hongxuandaozun/laracom/demo-service/trace"
 	"github.com/micro/go-micro"
+	"github.com/micro/go-micro/metadata"
 	traceplugin "github.com/micro/go-plugins/wrapper/trace/opentracing"
 	"github.com/opentracing/opentracing-go"
 	"log"
@@ -15,8 +15,30 @@ import (
 type DemoServiceHandler struct {
 }
 
+//func (s *DemoServiceHandler) SayHello(ctx context.Context, req *pb.DemoRequest, rsp *pb.DemoResponse) error {
+//	fmt.Println(req.Name)
+//	rsp.Text = "你好, " + req.Name
+//	return nil
+//}
 func (s *DemoServiceHandler) SayHello(ctx context.Context, req *pb.DemoRequest, rsp *pb.DemoResponse) error {
-	fmt.Println(req.Name)
+	// 从微服务上下文中获取追踪信息
+	md, ok := metadata.FromContext(ctx)
+	if !ok {
+		md = make(map[string]string)
+	}
+	var sp opentracing.Span
+	wireContext, _ := opentracing.GlobalTracer().Extract(opentracing.TextMap, opentracing.TextMapCarrier(md))
+	// 创建新的 Span 并将其绑定到微服务上下文
+	sp = opentracing.StartSpan("SayHello", opentracing.ChildOf(wireContext))
+	// 记录请求
+	sp.SetTag("req", req)
+	defer func() {
+		// 记录响应
+		sp.SetTag("res", rsp)
+		// 在函数返回 stop span 之前，统计函数执行时间
+		sp.Finish()
+	}()
+
 	rsp.Text = "你好, " + req.Name
 	return nil
 }
