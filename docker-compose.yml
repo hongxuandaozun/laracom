@@ -4,23 +4,43 @@ version: '3.3'
 services:
   laracom-demo-cli:
     build: ./demo-cli
+    container_name: lara-demo-cli
     depends_on:
-      - jaeger
+      - laracom-jaeger
+      - laracom-etcd1
+      - laracom-etcd2
+      - laracom-etcd3
     environment:
-      MICRO_REGISTRY: "mdns"
-      MICRO_TRACE_SERVER: "jaeger:6831"
+      MICRO_REGISTRY: "etcd"
+      MICRO_REGISTRY_ADDRESS: "laracom-etcd1:2379,laracom-etcd2:2379,laracom-etcd3:2379"
+      MICRO_TRACE_SERVER: "laracom-jaeger:6831"
 
   laracom-demo-service:
     build: ./demo-service
+    container_name: laracom-demo-service
     depends_on:
-      - jaeger
+      - laracom-jaeger
+      - laracom-etcd1
+      - laracom-etcd2
+      - laracom-etcd3
     ports:
       - 9091:9091
     environment:
       MICRO_SERVER_ADDRESS: ":9091"
-      MICRO_REGISTRY: "mdns"
-      MICRO_TRACE_SERVER: "jaeger:6831"
-
+      MICRO_REGISTRY: "etcd"
+      MICRO_REGISTRY_ADDRESS: "laracom-etcd1:2379,laracom-etcd2:2379,laracom-etcd3:2379"
+      MICRO_TRACE_SERVER: "laracom-jaeger:6831"
+  laracom-demo-api:
+    build: ./demo-api
+    container_name: laracom-demo-api
+    depends_on:
+      - laracom-demo-service
+    environment:
+      MICRO_REGISTRY: "etcd"
+      MICRO_REGISTRY_ADDRESS: "laracom-etcd1:2379,laracom-etcd2:2379,laracom-etcd3:2379"
+      MICRO_TRACE_SERVER: "laracom-jaeger:6831"
+    networks:
+      - microservice
   laracom-user-service:
     container_name: laracom-user-service
     depends_on:
@@ -74,13 +94,14 @@ services:
       MICRO_REGISTRY: "etcd"
       MICRO_REGISTRY_ADDRESS: "laracom-etcd1:2379,laracom-etcd2:2379,laracom-etcd3:2379"
     links:
-      - laracom-user-service
-      - laracom-product-service
+#      - laracom-user-service
+#      - laracom-product-service
+      - laracom-demo-api
     ports:
       - 8080:8080
     networks:
       - microservice
-    command: api --handler=rpc --namespace=laracom.service
+    command: api --handler=http --namespace=laracom.api
   laracom-nats:
     image: nats:latest
     container_name: laracom-nats
@@ -289,8 +310,9 @@ services:
     networks:
       - microservice
     restart: always
-  jaeger:
+  laracom-jaeger:
     image: jaegertracing/all-in-one:latest
+    container_name: laracom-jaeger
     ports:
       - "6831:6831/udp"
       - "16686:16686"

@@ -3,10 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/micro/go-micro"
-	//"github.com/micro/go-micro/service"
 	pb "github.com/hongxuandaozun/laracom/demo-service/proto/demo"
 	"github.com/hongxuandaozun/laracom/demo-service/trace"
+	"github.com/micro/go-micro"
 	traceplugin "github.com/micro/go-plugins/wrapper/trace/opentracing"
 	"github.com/opentracing/opentracing-go"
 	"log"
