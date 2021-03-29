@@ -3,11 +3,11 @@ package main
 import (
 	"context"
 	pb "github.com/hongxuandaozun/laracom/demo-service/proto/demo"
-	"github.com/hongxuandaozun/laracom/demo-service/trace"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/metadata"
 	traceplugin "github.com/micro/go-plugins/wrapper/trace/opentracing"
 	"github.com/opentracing/opentracing-go"
+	"laracom/common/trace"
 	"log"
 	"os"
 )
