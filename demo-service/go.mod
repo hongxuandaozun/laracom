@@ -1,5 +1,6 @@
 module github.com/hongxuandaozun/laracom/demo-service
 
+
 go 1.14
 
 require (
