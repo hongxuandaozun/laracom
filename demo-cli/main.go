@@ -2,8 +2,8 @@ package main
 
 import (
 	"context"
+	tracer "github.com/hongxuandaozun/laracom/common/tracer"
 	pb "github.com/hongxuandaozun/laracom/demo-service/proto/demo"
-	"github.com/hongxuandaozun/laracom/demo-service/trace"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/metadata"
 	traceplugin "github.com/micro/go-plugins/wrapper/trace/opentracing"
@@ -15,7 +15,7 @@ import (
 func main() {
 
 	// 初始化追踪器
-	t, io, err := trace.NewTracer("laracom.demo.cli", os.Getenv("MICRO_TRACE_SERVER"))
+	t, io, err := tracer.NewTracer("laracom.demo.cli", os.Getenv("MICRO_TRACE_SERVER"))
 	if err != nil {
 		log.Fatal(err)
 	}
