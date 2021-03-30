@@ -4,6 +4,7 @@ go 1.14
 
 require (
 	github.com/gin-gonic/gin v1.6.3
+	github.com/hongxuandaozun/laracom/common v0.0.0-20210330014716-02b31592860b
 	github.com/hongxuandaozun/laracom/demo-service v0.0.0-20210329070714-79aae268a334
 	github.com/micro/go-micro v1.18.0
 	github.com/opentracing/opentracing-go v1.2.0

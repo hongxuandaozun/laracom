@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/hongxuandaozun/laracom/common/tracer"
-	"github.com/hongxuandaozun/laracom/common/wrapper/tracer/opentracing/gin2micro"
+	tracer "github.com/hongxuandaozun/laracom/common/tracer"
+	"github.com/hongxuandaozun/laracom/common/wrapper/ctrace/opentracing/gin2micro"
 	pb "github.com/hongxuandaozun/laracom/demo-service/proto/demo"
 	"github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/web"
