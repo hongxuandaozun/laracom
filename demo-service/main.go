@@ -17,7 +17,8 @@ import (
 	"github.com/micro/go-micro/config/source"
 	"github.com/micro/go-micro/config/source/etcd"
 	"github.com/micro/go-micro/config/source/file"
-	"github.com/hongxuandaozun/laracom/common/log"
+	"github.com/sirupsen/logrus"
+	_ "github.com/hongxuandaozun/laracom/common/log"
 	"strings"
 	"time"
 )

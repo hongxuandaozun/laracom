@@ -233,6 +233,7 @@ github.com/hongxuandaozun/laracom v0.2.7 h1:I/L2l/8eZTtPA6xcGg1t/PVy4pLl1IgFXFM5
 github.com/hongxuandaozun/laracom/common v0.0.0-20210401072210-7b66642f5c2b h1:JqUzImWbfff0ynKSky0QYeiAyuJljPeYrnF1scZ1bag=
 github.com/hongxuandaozun/laracom/common v0.0.0-20210401072210-7b66642f5c2b/go.mod h1:cqEpyOd/55dpnFs+J7v7eNLysyCQN1qeIIbiDcSzqYI=
 github.com/hongxuandaozun/laracom/common v0.0.0-20210401075003-4012fdc93e89 h1:rghSHu8d0QWwswVamEJ5wPmQtTAJ+QA682xe8qexe+Q=
+github.com/hongxuandaozun/laracom/common v0.0.0-20210401075003-4012fdc93e89/go.mod h1:cqEpyOd/55dpnFs+J7v7eNLysyCQN1qeIIbiDcSzqYI=
 github.com/hongxuandaozun/laracom/user-service v0.0.0-20210401072210-7b66642f5c2b h1:yFrP4y0AyB/uNj6hb85peXtr/h4O4mIx9h/JbJ2L89s=
 github.com/hongxuandaozun/laracom/user-service v0.0.0-20210401072210-7b66642f5c2b/go.mod h1:4i2JegQe0alThRK20uTkIYk7t67hDGSW/QfwcY0Ag6w=
 github.com/hpcloud/tail v1.0.0 h1:nfCOvKYfkgYP8hkirhJocXT2+zOD8yUNjXaWfTlyFKI=
