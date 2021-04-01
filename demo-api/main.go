@@ -38,7 +38,6 @@ func (s *Say) Hello(c *gin.Context) {
 	})
 
 	if err != nil {
-		log.Println("返回错误信息", err)
 		c.JSON(500, err)
 	}
 

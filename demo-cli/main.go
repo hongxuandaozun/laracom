@@ -6,6 +6,7 @@ import (
 	pb "github.com/hongxuandaozun/laracom/demo-service/proto/demo"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/metadata"
+	hystrix2 "github.com/micro/go-plugins/wrapper/breaker/hystrix"
 	traceplugin "github.com/micro/go-plugins/wrapper/trace/opentracing"
 	"github.com/opentracing/opentracing-go"
 	"log"
@@ -23,7 +24,7 @@ func main() {
 
 	service := micro.NewService(
 		micro.Name("laracom.demo.cli"),
-		micro.WrapClient(traceplugin.NewClientWrapper(t)),
+		micro.WrapClient(traceplugin.NewClientWrapper(t), hystrix2.NewClientWrapper()),
 	)
 	service.Init()
 
@@ -42,7 +43,7 @@ func main() {
 	ctx = opentracing.ContextWithSpan(ctx, span)
 	ctx = metadata.NewContext(ctx, md)
 	// 记录请求 && 响应 && 错误
-	req := &pb.DemoRequest{Name: "学院君"}
+	req := &pb.DemoRequest{Name: "学院君22222"}
 	span.SetTag("req", req)
 	resp, err := client.SayHello(ctx, req)
 	if err != nil {
