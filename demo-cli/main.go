@@ -29,7 +29,8 @@ func main() {
 
 	service := micro.NewService(
 		micro.Name("laracom.demo.cli"),
-		micro.WrapClient(traceplugin.NewClientWrapper(t), hystrix.NewClientWrapper(), ratelimiter.NewHandlerWrapper(QPS)),
+		micro.WrapClient(traceplugin.NewClientWrapper(t), hystrix.NewClientWrapper()),
+		micro.WrapHandler(ratelimiter.NewHandlerWrapper(QPS)),
 	)
 	service.Init()
 

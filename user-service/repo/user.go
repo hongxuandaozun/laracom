@@ -11,6 +11,7 @@ type Repository interface {
 	GetByEmail(email string) (*model.User, error)
 	GetAll() ([]*model.User, error)
 	Update(User *model.User) error
+	GetByName(name string) (*model.User, error)
 }
 type UserRepository struct {
 	Db *gorm.DB
@@ -52,4 +53,12 @@ func (repo *UserRepository) Update(user *model.User) error {
 		return err
 	}
 	return nil
+}
+
+func (repo *UserRepository) GetByName(name string) (*model.User, error) {
+	var user model.User
+	if err := repo.Db.Where("name = ?", name).First(&user).Error; err != nil {
+		return nil, err
+	}
+	return &user, nil
 }

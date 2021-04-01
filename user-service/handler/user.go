@@ -191,3 +191,10 @@ func (srv *UserService) PublishEvent(reset *pb.PasswordReset) error {
 	}
 	return nil
 }
+
+func (srv *UserService) GetById(ctx context.Context, req *pb.User, res *pb.Response) error {
+	name := "test" + req.Id
+	user, _ := srv.Repo.GetByName(name)
+	res.User, _ = user.ToProtobuf()
+	return nil
+}
