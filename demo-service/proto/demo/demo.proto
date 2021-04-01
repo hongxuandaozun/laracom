@@ -4,6 +4,7 @@ package demo;
 
 service DemoService {
   rpc SayHello(DemoRequest) returns (DemoResponse) {}
+  rpc SayHelloByUserId(HelloRequest) returns (DemoResponse) {}
 }
 
 message DemoRequest {
@@ -12,4 +13,8 @@ message DemoRequest {
 
 message DemoResponse {
   string text = 2;
+}
+
+message HelloRequest{
+  string id = 1;
 }

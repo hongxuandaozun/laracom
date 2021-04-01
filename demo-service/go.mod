@@ -10,4 +10,5 @@ require (
 	github.com/micro/go-plugins/wrapper/trace/opentracing v0.0.0-20200119172437-4fe21aa238fd
 	github.com/opentracing/opentracing-go v1.2.0
 	golang.org/x/net v0.0.0-20210326220855-61e056675ecf
+	github.com/hongxuandaozun/laracom/user-service v0.0.0-20210401025645-4dfc1a156dc9
 )
