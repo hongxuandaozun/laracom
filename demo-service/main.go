@@ -3,14 +3,14 @@ package main
 import (
 	"context"
 	"github.com/hongxuandaozun/laracom/common/tracer"
+	"github.com/hongxuandaozun/laracom/common/wrapper/breaker/hystrix"
 	pb "github.com/hongxuandaozun/laracom/demo-service/proto/demo"
+	userpb "github.com/hongxuandaozun/laracom/user-service/proto/user"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/metadata"
 	traceplugin "github.com/micro/go-plugins/wrapper/trace/opentracing"
 	"github.com/opentracing/opentracing-go"
-	userpb "github.com/hongxuandaozun/laracom/user-service/proto/user"
 	"log"
-	"github.com/hongxuandaozun/laracom/common/wrapper/breaker/hystrix"
 	"os"
 )
 
@@ -39,15 +39,15 @@ func (s *DemoServiceHandler) SayHello(ctx context.Context, req *pb.DemoRequest, 
 	rsp.Text = "你好, " + req.Name
 	return nil
 }
-func (s *DemoServiceHandler) SayHelloById(ctx context.Context,req *pb.HelloRequest,res *pb.DemoResponse) error {
+func (s *DemoServiceHandler) SayHelloById(ctx context.Context, req *pb.HelloRequest, res *pb.DemoResponse) error {
 	hystrix.Configure([]string{"laracom.service.user.UserService.GetById"})
 	service := micro.NewService(micro.WrapClient(hystrix.NewClientWrapper()))
-	client := userpb.NewUserServiceClient("laracom.service.user",service.Client())
-	resp,err := client.GetById(context.TODO(),&userpb.User{Id:req.Id})
+	client := userpb.NewUserServiceClient("laracom.service.user", service.Client())
+	resp, err := client.GetById(context.TODO(), &userpb.User{Id: req.Id})
 	if err != nil {
 		return err
 	}
-	res.Text = "nihao"+resp.User.name
+	res.Text = "nihao" + resp.User.name
 	return nil
 }
 func main() {
