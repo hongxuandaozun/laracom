@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	pb "github.com/hongxuandaozun/laracom/product-service/proto/product"
 	"github.com/micro/cli"
 	"github.com/micro/go-micro"
-	pb "github.com/nonfu/laracom/product-service/proto/product"
 	"golang.org/x/net/context"
 	"log"
 )

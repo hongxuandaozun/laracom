@@ -1,8 +1,8 @@
 package model
 
 import (
+	pb "github.com/hongxuandaozun/laracom/product-service/proto/product"
 	"github.com/jinzhu/gorm"
-	pb "github.com/nonfu/laracom/product-service/proto/product"
 )
 
 type Category struct {

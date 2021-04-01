@@ -1,8 +1,8 @@
 package repo
 
 import (
+	"github.com/hongxuandaozun/laracom/product-service/model"
 	"github.com/jinzhu/gorm"
-	"github.com/nonfu/laracom/product-service/model"
 )
 
 type CategoryRepositoryInterface interface {

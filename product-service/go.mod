@@ -1,4 +1,4 @@
-module github.com/nonfu/laracom/product-service
+module github.com/hongxuandaozun/laracom/product-service
 
 go 1.14
 

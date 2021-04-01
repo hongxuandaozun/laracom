@@ -1,6 +1,6 @@
 package model
 
-import pb "github.com/nonfu/laracom/product-service/proto/product"
+import pb "github.com/hongxuandaozun/laracom/product-service/proto/product"
 
 type ProductImage struct {
 	ID        uint   `gorm:"primary_key"`

@@ -3,10 +3,10 @@ package handler
 import (
 	"context"
 	"errors"
+	"github.com/hongxuandaozun/laracom/product-service/model"
+	pb "github.com/hongxuandaozun/laracom/product-service/proto/product"
+	"github.com/hongxuandaozun/laracom/product-service/repo"
 	"github.com/jinzhu/gorm"
-	"github.com/nonfu/laracom/product-service/model"
-	pb "github.com/nonfu/laracom/product-service/proto/product"
-	"github.com/nonfu/laracom/product-service/repo"
 )
 
 type ImageService struct {
