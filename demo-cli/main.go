@@ -7,7 +7,6 @@ import (
 	pb "github.com/hongxuandaozun/laracom/demo-service/proto/demo"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/metadata"
-	"github.com/micro/go-micro/v2"
 	ratelimiter "github.com/micro/go-plugins/wrapper/ratelimiter/uber"
 	traceplugin "github.com/micro/go-plugins/wrapper/trace/opentracing"
 	"github.com/opentracing/opentracing-go"

@@ -3,7 +3,7 @@ package hystrix
 import (
 	"github.com/afex/hystrix-go/hystrix"
 	"github.com/eapache/go-resiliency/retrier"
-	"github.com/micro/go-micro/v2/client"
+	"github.com/micro/go-micro/client"
 	"log"
 	"net"
 	"net/http"
