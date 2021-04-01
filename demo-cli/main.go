@@ -8,11 +8,14 @@ import (
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/metadata"
 	"github.com/micro/go-micro/v2"
+	ratelimiter "github.com/micro/go-plugins/wrapper/ratelimiter/uber"
 	traceplugin "github.com/micro/go-plugins/wrapper/trace/opentracing"
 	"github.com/opentracing/opentracing-go"
 	"log"
 	"os"
 )
+
+const QPS = 1000 // 每秒请求数
 
 func main() {
 
@@ -27,7 +30,7 @@ func main() {
 
 	service := micro.NewService(
 		micro.Name("laracom.demo.cli"),
-		micro.WrapClient(traceplugin.NewClientWrapper(t), hystrix.NewClientWrapper()),
+		micro.WrapClient(traceplugin.NewClientWrapper(t), hystrix.NewClientWrapper(), ratelimiter.NewHandlerWrapper(QPS)),
 	)
 	service.Init()
 
