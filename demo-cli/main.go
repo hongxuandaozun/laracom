@@ -3,10 +3,11 @@ package main
 import (
 	"context"
 	tracer "github.com/hongxuandaozun/laracom/common/tracer"
+	"github.com/hongxuandaozun/laracom/common/wrapper/breaker/hystrix"
 	pb "github.com/hongxuandaozun/laracom/demo-service/proto/demo"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/metadata"
-	hystrix2 "github.com/micro/go-plugins/wrapper/breaker/hystrix"
+	"github.com/micro/go-micro/v2"
 	traceplugin "github.com/micro/go-plugins/wrapper/trace/opentracing"
 	"github.com/opentracing/opentracing-go"
 	"log"
@@ -22,9 +23,11 @@ func main() {
 	}
 	defer io.Close()
 
+	hystrix.Configure([]string{"laracom.service.demo.DemoService.SayHello"})
+
 	service := micro.NewService(
 		micro.Name("laracom.demo.cli"),
-		micro.WrapClient(traceplugin.NewClientWrapper(t), hystrix2.NewClientWrapper()),
+		micro.WrapClient(traceplugin.NewClientWrapper(t), hystrix.NewClientWrapper()),
 	)
 	service.Init()
 
