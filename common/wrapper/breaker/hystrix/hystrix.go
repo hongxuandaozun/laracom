@@ -4,6 +4,7 @@ import (
 	"github.com/afex/hystrix-go/hystrix"
 	"github.com/eapache/go-resiliency/retrier"
 	"github.com/micro/go-micro/v2/client"
+	"log"
 	"net"
 	"net/http"
 	"time"
@@ -25,7 +26,11 @@ func (c *clientWrapper) Call(ctx context.Context, req client.Request, rsp interf
 			return c.Client.Call(ctx, req, rsp, opts...)
 		})
 
-	}, nil)
+	}, func(err error) error {
+		// todo 服务降级逻辑处理,作为服务熔断的兜底
+		log.Printf("hystrix fallback error: %v", err)
+		return err
+	})
 }
 
 // NewClientWrapper returns a hystrix client Wrapper.
