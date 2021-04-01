@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
+	database "github.com/hongxuandaozun/laracom/user-service/db"
+	"github.com/hongxuandaozun/laracom/user-service/handler"
+	"github.com/hongxuandaozun/laracom/user-service/model"
+	pb "github.com/hongxuandaozun/laracom/user-service/proto/user"
+	repository "github.com/hongxuandaozun/laracom/user-service/repo"
+	"github.com/hongxuandaozun/laracom/user-service/service"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/util/log"
-	database "github.com/nonfu/laracom/user-service/db"
-	"github.com/nonfu/laracom/user-service/handler"
-	"github.com/nonfu/laracom/user-service/model"
-	pb "github.com/nonfu/laracom/user-service/proto/user"
-	repository "github.com/nonfu/laracom/user-service/repo"
-	"github.com/nonfu/laracom/user-service/service"
 )
 
 func main() {

@@ -1,8 +1,8 @@
 package model
 
 import (
+	pb "github.com/hongxuandaozun/laracom/user-service/proto/user"
 	"github.com/jinzhu/gorm"
-	pb "github.com/nonfu/laracom/user-service/proto/user"
 	"strconv"
 )
 

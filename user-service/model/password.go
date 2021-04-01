@@ -1,7 +1,7 @@
 package model
 
 import (
-	pb "github.com/nonfu/laracom/user-service/proto/user"
+	pb "github.com/hongxuandaozun/laracom/user-service/proto/user"
 	"time"
 )
 

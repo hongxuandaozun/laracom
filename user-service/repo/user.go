@@ -1,8 +1,8 @@
 package repo
 
 import (
+	"github.com/hongxuandaozun/laracom/user-service/model"
 	"github.com/jinzhu/gorm"
-	"github.com/nonfu/laracom/user-service/model"
 )
 
 type Repository interface {

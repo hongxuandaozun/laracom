@@ -1,9 +1,9 @@
 package repo
 
 import (
+	"github.com/hongxuandaozun/laracom/user-service/model"
+	pb "github.com/hongxuandaozun/laracom/user-service/proto/user"
 	"github.com/jinzhu/gorm"
-	"github.com/nonfu/laracom/user-service/model"
-	pb "github.com/nonfu/laracom/user-service/proto/user"
 )
 
 type PasswordResetInterface interface {
