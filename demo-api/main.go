@@ -15,7 +15,7 @@ import (
 type Say struct{}
 
 var (
-	cli pb.DemoServiceClient
+	cli DemoServiceClient
 )
 
 func (s *Say) Anything(c *gin.Context) {
@@ -33,7 +33,7 @@ func (s *Say) Hello(c *gin.Context) {
 	if ok == false {
 		log.Println("get context err")
 	}
-	response, err := cli.SayHello(ctx, &pb.DemoRequest{
+	response, err := cli.SayHello(ctx, &DemoRequest{
 		Name: name,
 	})
 
@@ -63,7 +63,7 @@ func main() {
 	service.Init()
 
 	// setup Demo Server Client
-	cli = pb.NewDemoServiceClient("laracom.service.demo", client.DefaultClient)
+	cli = NewDemoServiceClient("laracom.service.demo", client.DefaultClient)
 
 	// Create RESTful handler (using Gin)
 	say := new(Say)

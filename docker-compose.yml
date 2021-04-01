@@ -31,6 +31,7 @@ services:
       MICRO_REGISTRY: "etcd"
       MICRO_REGISTRY_ADDRESS: "laracom-etcd1:2379,laracom-etcd2:2379,laracom-etcd3:2379"
       MICRO_TRACE_SERVER: "laracom-jaeger:6831"
+      ENABLE_REMOTE_CONFIG: "false"
     networks:
       - microservice
   laracom-demo-api:
@@ -176,6 +177,8 @@ services:
       - 23801:2380
     networks:
       - microservice
+    volumes:
+    - etcd_data_1:/bitnami/etcd
   laracom-etcd2:
     image: bitnami/etcd:latest
     container_name: laracom-etcd2
@@ -194,6 +197,8 @@ services:
       - 23802:2380
     networks:
       - microservice
+    volumes:
+      - etcd_data_1:/bitnami/etcd
   laracom-etcd3:
     image: bitnami/etcd:latest
     container_name: laracom-etcd3
@@ -212,6 +217,8 @@ services:
       - 23803:2380
     networks:
       - microservice
+    volumes:
+      - etcd_data_1:/bitnami/etcd
   e3w:
     image: soyking/e3w:latest
     container_name: laracom-e3w
@@ -325,6 +332,9 @@ volumes:
   db_data: {}
   grafana_data: { }
   prometheus_data: { }
+  etcd_data_1: { }
+  etcd_data_2: { }
+  etcd_data_3: { }
 networks:
   microservice:
     external: true
