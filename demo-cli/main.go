@@ -10,7 +10,6 @@ import (
 	ratelimiter "github.com/micro/go-plugins/wrapper/ratelimiter/uber"
 	traceplugin "github.com/micro/go-plugins/wrapper/trace/opentracing"
 	"github.com/opentracing/opentracing-go"
-	userpb "github.com/hongxuandaozun/laracom/user-service/proto/user"
 	"log"
 	"os"
 )

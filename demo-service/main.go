@@ -1,31 +1,32 @@
+//+build linux darwin windows
 package main
 
 import (
 	"context"
+	_ "github.com/hongxuandaozun/laracom/common/log"
 	"github.com/hongxuandaozun/laracom/common/tracer"
 	"github.com/hongxuandaozun/laracom/common/wrapper/breaker/hystrix"
 	pb "github.com/hongxuandaozun/laracom/demo-service/proto/demo"
 	userpb "github.com/hongxuandaozun/laracom/user-service/proto/user"
 	"github.com/micro/go-micro"
-	"github.com/micro/go-micro/metadata"
-	traceplugin "github.com/micro/go-plugins/wrapper/trace/opentracing"
-	"github.com/opentracing/opentracing-go"
-	"log"
-	"os"
 	"github.com/micro/go-micro/config"
 	"github.com/micro/go-micro/config/encoder/json"
 	"github.com/micro/go-micro/config/source"
 	"github.com/micro/go-micro/config/source/etcd"
 	"github.com/micro/go-micro/config/source/file"
+	"github.com/micro/go-micro/metadata"
+	traceplugin "github.com/micro/go-plugins/wrapper/trace/opentracing"
+	"github.com/opentracing/opentracing-go"
 	"github.com/sirupsen/logrus"
-	_ "github.com/hongxuandaozun/laracom/common/log"
+	"log"
+	"os"
 	"strings"
 	"time"
 )
 
 type AppConfig struct {
 	ServiceName string `json:"service_name"`
-	UserName string `json:"user_name"`
+	UserName    string `json:"user_name"`
 }
 type DemoConfig struct {
 	App AppConfig `json:"app"`
@@ -33,6 +34,7 @@ type DemoConfig struct {
 type DemoServiceHandler struct {
 	appConfig *AppConfig
 }
+
 func (s *DemoServiceHandler) SayHello1(ctx context.Context, req *pb.DemoRequest, rsp *pb.DemoResponse) error {
 	if req.Name == "" {
 		req.Name = s.appConfig.UserName
@@ -99,49 +101,49 @@ func main() {
 	}
 }
 
-func initAppConfig()*AppConfig  {
+func initAppConfig() *AppConfig {
 	// 默认使用JSON编码
 	encoder := json.NewEncoder()
-	fileSource := file.NewSource(file.WithPath("./demo.json"),source.WithEncoder(encoder))
+	fileSource := file.NewSource(file.WithPath("./demo.json"), source.WithEncoder(encoder))
 	etcdSource := etcd.NewSource(
-			etcd.WithAddress(strings.Split(os.Getenv("MICRO_REGISTRY_ADDRESS"),",")[0]),
-			etcd.WithPrefix("laracom/demo"),
-			etcd.StripPrefix(true),
-			source.WithEncoder(encoder),
-		)
+		etcd.WithAddress(strings.Split(os.Getenv("MICRO_REGISTRY_ADDRESS"), ",")[0]),
+		etcd.WithPrefix("laracom/demo"),
+		etcd.StripPrefix(true),
+		source.WithEncoder(encoder),
+	)
 	conf := config.NewConfig()
 	var err error
-	if os.Getenv("ENABLE_REMOTE_CONFIG") == "true"{
-		err = conf.Load(fileSource,etcdSource)
-	}else{
+	if os.Getenv("ENABLE_REMOTE_CONFIG") == "true" {
+		err = conf.Load(fileSource, etcdSource)
+	} else {
 		err = conf.Load(fileSource)
 	}
 	if err != nil {
-		logrus.Fatalf("读取配置失败:%v",err)
+		logrus.Fatalf("读取配置失败:%v", err)
 	}
 	var appConfig AppConfig
 	err = conf.Get("app").Scan(&appConfig)
 	if err != nil {
-		logrus.Fatalf("读取配置失败:%v",err)
+		logrus.Fatalf("读取配置失败:%v", err)
 	}
-	logrus.Printf("初始化配置:%v",appConfig)
-	logrus.Printf("初始化配置:%v",conf.Map())
+	logrus.Printf("初始化配置:%v", appConfig)
+	logrus.Printf("初始化配置:%v", conf.Map())
 	// 开启协程监听配置变更
 	go func() {
-		for  {
+		for {
 			time.Sleep(time.Second * 5)
-			w ,err := conf.Watch("app")
+			w, err := conf.Watch("app")
 			if err != nil {
 				logrus.Printf("监听配置变更失败: %v", err)
 				continue
 			}
-			value ,err := w.Next()
+			value, err := w.Next()
 			if err != nil {
 				logrus.Printf("监听配置变更失败: %v", err)
 				continue
 			}
 			value.Scan(&appConfig)
-			logrus.Printf("配置值变更：%s", &appConfig))
+			logrus.Printf("配置值变更：%s", &appConfig)
 		}
 	}()
 	return &appConfig
